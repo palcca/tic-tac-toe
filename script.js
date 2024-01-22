@@ -1,27 +1,27 @@
 const tic_tac_toe =(function(){
     const container = document.querySelector(".container");
-    const main = function (player1, player2){
+  const main = function (player1, player2){
     const wins=[[1,2,3],[4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [3,5,7], [1,5,9]];
     const scoreBoard = document.querySelector(".scoreBoard");
     
     const newGameBtn = document.createElement("button");
-        newGameBtn.textContent="New Game";
-        container.appendChild(newGameBtn);
+    newGameBtn.textContent="New Game";
+    container.appendChild(newGameBtn);
         
-        newGameBtn.addEventListener("click", () => {
+    newGameBtn.addEventListener("click", () => {
             
-            while (container.firstChild) {
-                container.removeChild(container.lastChild);
+        while (container.firstChild) {
+            container.removeChild(container.lastChild);
             }
-            scoreBoard.textContent=null;
-            playerNameForm();
+        scoreBoard.textContent=null;
+        playerNameForm();
         });
 
     const resetBtn = document.createElement("button");
-        resetBtn.textContent="Reset";
-        container.appendChild(resetBtn);
+    resetBtn.textContent="Reset";
+    container.appendChild(resetBtn);
         
-        resetBtn.addEventListener("click", () => {
+    resetBtn.addEventListener("click", () => {
            table.clear();
            table.fill()
            game.turn=1;
@@ -32,12 +32,10 @@ const tic_tac_toe =(function(){
 
     const game = new gameBoard();
     const table = new Table();
-        table.fill();
+    table.fill();
     const playerX=new Player(player1, "X");
     const playerO=new Player(player2, "O");
-        
-    
-        scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. "+"(O) "+playerO.name+ ": " + playerO.score;        
+    scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. "+"(O) "+playerO.name+ ": " + playerO.score;        
 
     function gameBoard (){
         this.board=[[,,],[,,],[,,]];
@@ -185,11 +183,9 @@ const tic_tac_toe =(function(){
 
         container.appendChild(this.table);   
     }
+  };
 
-
-    };
-
-    const playerNameForm =function (){
+  const playerNameForm =function (){
 
     const player1name = document.createElement("input", "type=text");
     player1name.placeholder="Player X"
@@ -210,6 +206,7 @@ const tic_tac_toe =(function(){
  
 
     };
+    
     playerNameForm();
 })();
 
