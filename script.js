@@ -1,9 +1,10 @@
-let tic_tac_toe = function (player1, player2){
-
+const tic_tac_toe =(function(){
+    const container = document.querySelector(".container");
+    const main = function (player1, player2){
     const wins=[[1,2,3],[4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [3,5,7], [1,5,9]];
-    let scoreBoard = document.querySelector(".scoreBoard");
-    let container = document.querySelector(".container")
-    let newGameBtn = document.createElement("button");
+    const scoreBoard = document.querySelector(".scoreBoard");
+    
+    const newGameBtn = document.createElement("button");
         newGameBtn.textContent="New Game";
         container.appendChild(newGameBtn);
         
@@ -16,7 +17,7 @@ let tic_tac_toe = function (player1, player2){
             playerNameForm();
         });
 
-    let resetBtn = document.createElement("button");
+    const resetBtn = document.createElement("button");
         resetBtn.textContent="Reset";
         container.appendChild(resetBtn);
         
@@ -29,11 +30,11 @@ let tic_tac_toe = function (player1, player2){
            scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. "+"(O) "+playerO.name+ ": " + playerO.score;
         }); 
 
-    let game = new gameBoard();
-    let table = new Table();
+    const game = new gameBoard();
+    const table = new Table();
         table.fill();
-    let playerX=new Player(player1, "X");
-    let playerO=new Player(player2, "O");
+    const playerX=new Player(player1, "X");
+    const playerO=new Player(player2, "O");
         
     
         scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. "+"(O) "+playerO.name+ ": " + playerO.score;        
@@ -186,31 +187,33 @@ let tic_tac_toe = function (player1, player2){
     }
 
 
-};
+    };
 
-let playerNameForm =function (){
-    let container = document.querySelector(".container");
-    let player1name = document.createElement("input", "type=text");
+    const playerNameForm =function (){
+
+    const player1name = document.createElement("input", "type=text");
     player1name.placeholder="Player X"
-    let player2name = document.createElement("input", "type=text");
+    const player2name = document.createElement("input", "type=text");
     player2name.placeholder="Player O"
-    let namesBtn = document.createElement("button");
+    const namesBtn = document.createElement("button");
     namesBtn.textContent="START";
     container.appendChild(player1name);
     container.appendChild(player2name);
     container.appendChild(namesBtn);
-
+    
     namesBtn.addEventListener("click", ()=> {
         player1name.remove();
         player2name.remove()
         namesBtn.remove();
-        tic_tac_toe(player1name.value, player2name.value);
+        main(player1name.value, player2name.value);
     });
  
 
-};
+    };
+    playerNameForm();
+})();
 
-playerNameForm();
+
         
 
 
