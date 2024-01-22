@@ -25,6 +25,9 @@ body{
 }
 
 .column{
+    font-size: 3rem;
+    font-family: sans-serif;
+    font-weight: bolder; 
     display: flex;
     justify-content: center;
     align-items: center;

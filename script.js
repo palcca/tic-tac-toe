@@ -1,13 +1,21 @@
 let tic_tac_toe = function (player1, player2){
-   
+
+    let scoreBoard = document.querySelector(".scoreBoard");
     let container = document.querySelector(".container")
     let newGameBtn = document.createElement("button");
         newGameBtn.textContent="New Game";
         container.appendChild(newGameBtn);
         
-        newGameBtn.addEventListener("click", () => location.reload());
+        newGameBtn.addEventListener("click", () => {
+            
+            while (container.firstChild) {
+                container.removeChild(container.lastChild);
+            }
+            scoreBoard.textContent=null;
+            playerNameForm();
+        });
 
-        let resetBtn = document.createElement("button");
+    let resetBtn = document.createElement("button");
         resetBtn.textContent="Reset";
         container.appendChild(resetBtn);
         
@@ -24,7 +32,7 @@ let tic_tac_toe = function (player1, player2){
     let playerX=new PlayerX(player1);
     let playerO=new PlayerO(player2);
         
-    let scoreBoard = document.querySelector(".scoreBoard");
+    
         scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. ";
         scoreBoard.textContent+="(O) "+playerO.name+ ": " + playerO.score;
           
@@ -148,7 +156,7 @@ let tic_tac_toe = function (player1, player2){
         this.make = () => {
             let column = document.createElement("div");
             column.classList.add("column");
-            column.textContent=game.board[i-1][y-1];
+            column.textContent=game.board[this.coord_x-1][this.coord_y-1];
 
             column.addEventListener("click", () => {
                 game.addX0toBoard(coord_x,coord_y);
@@ -156,7 +164,7 @@ let tic_tac_toe = function (player1, player2){
                 clearTable();
         });
         
-        return column;
+        return column
     }
     }
 
@@ -174,13 +182,9 @@ let tic_tac_toe = function (player1, player2){
 
         container.appendChild(this.table);   
     }
-
-
-      
-    
 };
 
-let getPlayerNameForm =(function (){
+let playerNameForm =function (){
     let container = document.querySelector(".container");
     let player1name = document.createElement("input", "type=text");
     player1name.placeholder="Player X"
@@ -200,7 +204,9 @@ let getPlayerNameForm =(function (){
     });
  
 
-})();
+};
+
+playerNameForm();
         
 
 
