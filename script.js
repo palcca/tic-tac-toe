@@ -1,9 +1,9 @@
 const tic_tac_toe =(function(){
     const container = document.querySelector(".container");
+  
   const main = function (player1, player2){
     const wins=[[1,2,3],[4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [3,5,7], [1,5,9]];
     const scoreBoard = document.querySelector(".scoreBoard");
-    
     const newGameBtn = document.createElement("button");
     newGameBtn.textContent="New Game";
     container.appendChild(newGameBtn);
@@ -41,16 +41,12 @@ const tic_tac_toe =(function(){
         this.board=[[,,],[,,],[,,]];
         this.turn=1;
 
-
         this.addX0toBoard = function (coord_x, coord_y){
         
             if (this.turn%2==1 && !(this.board[coord_x][coord_y])){
-
                 this.board[coord_x][coord_y] = "X";
                 this.turn +=1;
-        
             } else if (this.turn%2==0 && !(this.board[coord_x][coord_y])){
-            
                 this.board[coord_x][coord_y] = "O"
                 this.turn +=1;
             }
@@ -60,6 +56,7 @@ const tic_tac_toe =(function(){
         //returns X if playerX is winner, O if playerO is winner, and T if its a tie
             let checkwinnerboard=[];
             let count=0;
+            
             if (this.turn > 4){
             
                 for(x=0; x<3;x++){
@@ -68,12 +65,10 @@ const tic_tac_toe =(function(){
                 
                         if(this.board[x][y]=="X"){
                         checkwinnerboard[count]=count+1;
-                        count++;
-                    
+                        count++;                 
                         } else if (this.board[x][y]=="O"){
                         checkwinnerboard[count]= 0-(count+1);
                         count++;
-                    
                         } else {
                         count++;
                         }
@@ -91,8 +86,8 @@ const tic_tac_toe =(function(){
                             table.fill();
                             playerX.score++;
                             scoreBoard.textContent="(X) "+playerX.name + " WINS!!!";
-                        return "X";
-
+                        
+                            return "X";
                     } else if (
                            (checkwinnerboard.includes(-Number(wins[i].slice(0, 1)))) &&
                            (checkwinnerboard.includes(-Number(wins[i].slice(1, 2)))) &&
@@ -103,36 +98,29 @@ const tic_tac_toe =(function(){
                             table.fill();
                             playerO.score++;
                             scoreBoard.textContent="(O) "+playerO.name + " WINS!!!";
-                            
-
-                    
+                                 
                         return  "O";
-            
-                    } else if (this.turn == 10){
-
+                     } else if (this.turn == 10){     
                         this.turn=1;
                         table.clear();
                         table.fill();
                         scoreBoard.textContent="IT'S A TIE!";
+                    
                         return "T";
-
                     }
                 }
-
             }
         }
         
   
-        }   
+    }   
     
-
     function Player(name, index){
         this.index =index;
         this.score=0;
         this.name=name;
     }
 
-    
     function Cell (coord_x, coord_y){
         this.coord_x=coord_x;
         this.coord_y=coord_y;
@@ -156,37 +144,35 @@ const tic_tac_toe =(function(){
         
         return cell
         }
-
     }
 
     function Table(){
-
         this.table = document.createElement("div");
         this.table.classList.add("table");
-
+        
         this.clear = function (){
+            
             while (this.table.firstChild) {
                 this.table.removeChild(this.table.lastChild);
             }
-
             game.board=[[,,],[,,],[,,]] ;
         }
 
         this.fill = function (){
+            
             for(i=0; i<3; i++){
+                
                 for (y=0; y<3; y++){
                 let cell = new Cell(i,y);
                 this.table.appendChild(cell.make());
                 }
             }
         }
-
         container.appendChild(this.table);   
     }
   };
 
   const playerNameForm =function (){
-
     const player1name = document.createElement("input", "type=text");
     player1name.placeholder="Player X"
     const player2name = document.createElement("input", "type=text");
@@ -202,11 +188,8 @@ const tic_tac_toe =(function(){
         player2name.remove()
         namesBtn.remove();
         main(player1name.value, player2name.value);
-    });
- 
-
+        });
     };
-    
     playerNameForm();
 })();
 
