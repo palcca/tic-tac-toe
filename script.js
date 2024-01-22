@@ -1,5 +1,6 @@
 let tic_tac_toe = function (player1, player2){
 
+    const wins=[[1,2,3],[4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [3,5,7], [1,5,9]];
     let scoreBoard = document.querySelector(".scoreBoard");
     let container = document.querySelector(".container")
     let newGameBtn = document.createElement("button");
@@ -20,152 +21,143 @@ let tic_tac_toe = function (player1, player2){
         container.appendChild(resetBtn);
         
         resetBtn.addEventListener("click", () => {
-            while (container.firstChild) {
-                container.removeChild(container.lastChild);
-              }
-            
-           tic_tac_toe(player1, player2);
+           table.clear();
+           table.fill()
+           game.turn=1;
+           playerX.score=0;
+           playerO.score=0;
+           scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. "+"(O) "+playerO.name+ ": " + playerO.score;
         }); 
 
     let game = new gameBoard();
-    let table=Table();
-    let playerX=new PlayerX(player1);
-    let playerO=new PlayerO(player2);
+    let table = new Table();
+        table.fill();
+    let playerX=new Player(player1, "X");
+    let playerO=new Player(player2, "O");
         
     
-        scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. ";
-        scoreBoard.textContent+="(O) "+playerO.name+ ": " + playerO.score;
-          
-
-    function updateScore(){
-        
-        let updateScore = game.checkWinner();
-        
-        switch (updateScore) {
-            case "X" : 
-                playerX.score++;
-                scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. ";
-                scoreBoard.textContent+="(O) "+playerO.name+ ": " + playerO.score;
-                break;
-            case "O" : 
-                playerO.score++;
-                scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. ";
-                scoreBoard.textContent+="(O) "+playerO.name+ ": " + playerO.score;
-                break;
-            
-        }
-    }
-
-    function clearTable(){
-        document.querySelector(".table").remove();
-        Table();
-    }
+        scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. "+"(O) "+playerO.name+ ": " + playerO.score;        
 
     function gameBoard (){
         this.board=[[,,],[,,],[,,]];
         this.turn=1;
 
+
         this.addX0toBoard = function (coord_x, coord_y){
         
-            if (this.turn%2==1 && !(this.board[coord_x-1][coord_y-1])){
+            if (this.turn%2==1 && !(this.board[coord_x][coord_y])){
 
-                this.board[coord_x-1][coord_y-1] = "X";
+                this.board[coord_x][coord_y] = "X";
                 this.turn +=1;
         
-            } else if (this.turn%2==0 && !(this.board[coord_x-1][coord_y-1])){
+            } else if (this.turn%2==0 && !(this.board[coord_x][coord_y])){
             
-                this.board[coord_x-1][coord_y-1] = "O"
+                this.board[coord_x][coord_y] = "O"
                 this.turn +=1;
             }
         }
 
         this.checkWinner = function(){
         //returns X if playerX is winner, O if playerO is winner, and T if its a tie
-
-        const winsX=[[1,2,3],[4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [3,5,7], [1,5,9]];
-        const winsO=[[-1,-2,-3],[-4,-5,-6], [-7,-8,-9], [-1,-4,-7], [-2,-5,-8], [-3,-6,-9], [-3,-5,-7], [-1,-5,-9]];
-        let checkwinnerboard=[];
-        let count=0;
-
-        for(x=0; x<3;x++){
+            let checkwinnerboard=[];
+            let count=0;
+            if (this.turn > 4){
             
-            for(y=0; y<3; y++){
+                for(x=0; x<3;x++){
+            
+                    for(y=0; y<3; y++){
                 
-                if(this.board[x][y]=="X"){
-                    checkwinnerboard[count]=count+1;
-                    count++;
-                
-                } else if (this.board[x][y]=="O"){
-                    checkwinnerboard[count]= 0-(count+1);
-                    count++;
-                
-                } else {
-                    count++;
+                        if(this.board[x][y]=="X"){
+                        checkwinnerboard[count]=count+1;
+                        count++;
+                    
+                        } else if (this.board[x][y]=="O"){
+                        checkwinnerboard[count]= 0-(count+1);
+                        count++;
+                    
+                        } else {
+                        count++;
+                        }
+                    }
                 }
-            }
-        }
 
-        for (i=0; i<8; i++){            
+                for (i=0; i<8; i++){            
 
-                if ((checkwinnerboard.includes(Number(winsX[i].slice(0, 1)))) &&
-                    (checkwinnerboard.includes(Number(winsX[i].slice(1, 2)))) &&
-                    (checkwinnerboard.includes(Number(winsX[i].slice(2, 3))))
-                    ){ 
-                        game = new gameBoard();
-                        
+                    if ((checkwinnerboard.includes(Number(wins[i].slice(0, 1)))) &&
+                        (checkwinnerboard.includes(Number(wins[i].slice(1, 2)))) &&
+                        (checkwinnerboard.includes(Number(wins[i].slice(2, 3))))
+                        ){   
+                            this.turn=1;
+                            table.clear();
+                            table.fill();
+                            playerX.score++;
+                            scoreBoard.textContent="(X) "+playerX.name + " WINS!!!";
                         return "X";
 
-                } else if ((checkwinnerboard.includes(Number(winsO[i].slice(0, 1)))) &&
-                           (checkwinnerboard.includes(Number(winsO[i].slice(1, 2)))) &&
-                           (checkwinnerboard.includes(Number(winsO[i].slice(2, 3))))
-                ){
-                    game = new gameBoard();
+                    } else if (
+                           (checkwinnerboard.includes(-Number(wins[i].slice(0, 1)))) &&
+                           (checkwinnerboard.includes(-Number(wins[i].slice(1, 2)))) &&
+                           (checkwinnerboard.includes(-Number(wins[i].slice(2, 3))))
+                    ){
+                            this.turn=1;
+                            table.clear();
+                            table.fill();
+                            playerO.score++;
+                            scoreBoard.textContent="(O) "+playerO.name + " WINS!!!";
+                            
+
                     
-                    return  "O";
+                        return  "O";
             
-                } else if (this.turn == 10){
-                    game = new gameBoard();
-                    
-                    return "T";
+                    } else if (this.turn == 10){
 
-                } else {
-            }
+                        this.turn=1;
+                        table.clear();
+                        table.fill();
+                        scoreBoard.textContent="IT'S A TIE!";
+                        return "T";
+
+                    }
+                }
 
             }
+        }
         
   
         }   
-    }
-
-    function PlayerX(name){
-        this.index = "X";
-        this.score=0;
-        this.name=name;
-    }
-
-    function PlayerO(name){
-        this.index = "O";
-        this.score=0;
-        this.name=name;
-    }
     
-    function Column (coord_x, coord_y){
+
+    function Player(name, index){
+        this.index =index;
+        this.score=0;
+        this.name=name;
+    }
+
+    
+    function Cell (coord_x, coord_y){
         this.coord_x=coord_x;
         this.coord_y=coord_y;
     
         this.make = () => {
-            let column = document.createElement("div");
-            column.classList.add("column");
-            column.textContent=game.board[this.coord_x-1][this.coord_y-1];
+            let cell = document.createElement("div");
+            cell.classList.add("cell");
+            cell.textContent=game.board[this.coord_x][this.coord_y];
 
-            column.addEventListener("click", () => {
+            cell.addEventListener("click", () => {
                 game.addX0toBoard(coord_x,coord_y);
-                updateScore();
-                clearTable();
+                cell.textContent=game.board[this.coord_x][this.coord_y];
+                if (cell.textContent=="X"){ 
+                    cell.style.color= "green";
+                } else if (cell.textContent=="O"){
+                    cell.style.color= "brown"; 
+                }
+                scoreBoard.textContent="(X) "+playerX.name+": " + playerX.score+" vs. "+"(O) "+playerO.name+ ": " + playerO.score;
+                game.checkWinner();
         });
         
-        return column
-    }
+        return cell
+        }
+
     }
 
     function Table(){
@@ -173,15 +165,27 @@ let tic_tac_toe = function (player1, player2){
         this.table = document.createElement("div");
         this.table.classList.add("table");
 
-        for(i=1; i<4; i++){
-            for (y=1; y<4; y++){
-                let column = new Column(i,y);
-                this.table.appendChild(column.make());
+        this.clear = function (){
+            while (this.table.firstChild) {
+                this.table.removeChild(this.table.lastChild);
+            }
+
+            game.board=[[,,],[,,],[,,]] ;
+        }
+
+        this.fill = function (){
+            for(i=0; i<3; i++){
+                for (y=0; y<3; y++){
+                let cell = new Cell(i,y);
+                this.table.appendChild(cell.make());
+                }
             }
         }
 
         container.appendChild(this.table);   
     }
+
+
 };
 
 let playerNameForm =function (){
