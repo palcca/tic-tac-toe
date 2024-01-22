@@ -1,0 +1,46 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.table{
+    width: 15rem;
+    height: 15rem;;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.column{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    width: 5rem;
+    height: 5rem;
+    background-color: rgba(0, 0, 0, 0.367);
+}
+
+.scoreBoard{
+    margin: 1rem;
+    font-family: sans-serif;
+    font-weight: bolder;    
+}
+
+button, input{
+    margin: 1rem;
+}
+
